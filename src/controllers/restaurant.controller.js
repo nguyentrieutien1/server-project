@@ -41,5 +41,10 @@ class Restaurant {
     const result = await restaurantService.deleteRes(id);
     return res.json({ result });
   };
+  getOne = async (req, res) => {
+    const { id } = req.params;
+    const result = await restaurantService.getOne(id);
+    return res.json({ result });
+  };
 }
 module.exports = new Restaurant();

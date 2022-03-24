@@ -21,7 +21,7 @@ class Spa {
       imgF.saveImg(images, result);
       return {
         statusCode: 200,
-        message: `Create Restaurant Successfully !`,
+        message: `Create Spa Successfully !`,
       };
     } catch (error) {
       return {

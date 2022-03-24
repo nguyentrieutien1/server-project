@@ -91,5 +91,16 @@ class Restaurant {
       };
     }
   };
+  getOne = async (id) => {
+    try {
+      const restaurant = await restaurantModel.findOne({ _id: id });
+      return {
+        statusCode: 200,
+        restaurant,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 module.exports = new Restaurant();
