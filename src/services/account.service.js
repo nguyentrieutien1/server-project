@@ -109,3 +109,90 @@ class Accounts {
         password,
         role,
       });
+
+      if (result.error) {
+        return result;
+      }
+      if (password) {
+        const hashPasswordResult = await hash.hassPassword(password);
+        password = hashPasswordResult;
+        await accountsModel.findByIdAndUpdate(id, {
+          email,
+          password,
+          username,
+          phone,
+          fullname,
+          id,
+          role,
+          avatar,
+        });
+      } else {
+        await accountsModel.findByIdAndUpdate(id, {
+          email,
+          username,
+          phone,
+          fullname,
+          id,
+          role,
+          avatar,
+        });
+      }
+
+      return {
+        statusCode: 200,
+        message: `Update Account Success `,
+      };
+    } catch (error) {
+      return {
+        statusCode: 400,
+        message: `Update Account Fail `,
+      };
+    }
+  };
+  getAllAccounts = async (id) => {
+    const paginate = 10;
+    const allAccounts = await accountsModel
+      .find({})
+      .skip((id - 1) * paginate)
+      .limit(paginate);
+    try {
+      if (allAccounts) {
+        return {
+          statusCode: 200,
+          accounts: allAccounts,
+        };
+      }
+    } catch (error) {
+      return {
+        statusCode: 400,
+        message: `get all accounts fail !`,
+      };
+    }
+  };
+  getAll = async (id) => {
+    try {
+      const accounts = await accountsModel.findOne({ _id: id });
+      return {
+        statusCode: 200,
+        accounts,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  deleteImg = async (id) => {
+    try {
+      await imagesModel.findByIdAndDelete(id);
+      return {
+        statusCode: 200,
+        message: "Delete Image successfully !",
+      };
+    } catch (error) {
+      return {
+        statusCode: 400,
+        message: "Delete Image Fail !",
+      };
+    }
+  };
+}
+module.exports = new Accounts();

@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
   images: [],
   idHotel: {
     type: "string",
+    ref: "hotels",
   },
   type: String,
   email: {
